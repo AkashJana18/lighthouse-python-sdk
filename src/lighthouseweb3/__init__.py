@@ -7,7 +7,6 @@ from typing import Any, Dict
 from .functions import create_wallet as createWallet
 from .functions import deal_status
 from .functions import download as _download
-from .functions import generate
 from .functions import get_api_key as getApiKey
 from .functions import get_balance as getBalance
 from .functions import get_file_info as getFileInfo
@@ -15,6 +14,7 @@ from .functions import get_ipns_record as getIpnsRecord
 from .functions import get_uploads as getUploads
 from .functions import ipns_generate_key as ipnsGenerateKey
 from .functions import ipns_publish_record as ipnsPublishRecord
+from .functions import kavach_generate
 from .functions import remove_ipns_record as removeIpnsRecord
 from .functions import upload as d
 
@@ -127,15 +127,15 @@ class Lighthouse:
         except Exception as e:
             raise e
 
-    async def generateEncryptionKey(self, threshold: int = 3, keyCount: int = 5) -> Dict[str, Any]:
+    async def generateEncryptionKey(self, threshold: int = 3, key_count: int = 5) -> Dict[str, Any]:
         """
         Generate a master encryption key and threshold-based key shards.
 
         :param threshold: Minimum number of shards required to reconstruct the master key.
-        :param keyCount: Total number of shards to generate (must be >= threshold).
+        :param key_count: Total number of shards to generate (must be >= threshold).
         :return: Dict with 'masterKey' and 'keyShards'
         """
         try:
-            return await generate(threshold, keyCount)
+            return await kavach_generate(threshold, key_count)
         except Exception as e:
             raise e

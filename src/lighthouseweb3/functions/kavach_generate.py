@@ -5,7 +5,7 @@ from secretsharing import SecretSharer
 
 
 def _generate_master_key() -> str:
-    # Generate a 32-byte secure random key and return it as a hex string
+    # Generate a 32-byte secure random key returning it as a hex string
     return secrets.token_hex(32)
 
 
@@ -24,12 +24,12 @@ def _split_key(master_key: str, threshold: int, key_count: int) -> List[Dict[str
     return key_shards
 
 
-async def generate(threshold: int = 3, keyCount: int = 5) -> Dict[str, Any]:
-    if keyCount < threshold:
+async def generate(threshold: int = 3, key_count: int = 5) -> Dict[str, Any]:
+    if key_count < threshold:
         raise ValueError("keyCount must be greater than or equal to threshold")
 
     master_key = _generate_master_key()
-    key_shards = _split_key(master_key, threshold, keyCount)
+    key_shards = _split_key(master_key, threshold, key_count)
 
     return {
         "masterKey": master_key,
